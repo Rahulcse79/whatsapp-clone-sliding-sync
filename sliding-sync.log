@@ -1,0 +1,8 @@
+Sync v3 [0.99.19] (c376f7f)
+Debug=false LogLevel= MaxConns=0
+2026/04/16 17:47:20 goose: no migrations to run. current version: 20240517104423
+[90m17:47:20[0m [32mINF[0m creating handler
+[90m17:47:20[0m [32mINF[0m retrieved global snapshot from database
+[90m17:47:20[0m [32mINF[0m listening TLS on 0.0.0.0:8009
+[90m17:47:20[0m [32mINF[0m StartV2Pollers [36mnum_devices=[0m0 [36mnum_fail_decrypt=[0m0
+[90m17:47:20[0m [32mINF[0m StartV2Pollers finished
