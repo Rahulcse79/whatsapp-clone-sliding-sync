@@ -1,9 +1,16 @@
-Sync v3 [0.99.19] (edfdc16)
+Sync v3 [0.99.19] (56bc996)
 Debug=false LogLevel= MaxConns=0
-[90m12:19:55[0m [31mWRN[0m Could not contact upstream homeserver. Is SYNCV3_SERVER set correctly? [36merror=[0m[31m"Get \"https://192.168.1.180:8480/_matrix/client/versions\": tls: failed to verify certificate: x509: “192.168.1.180” certificate is not trusted"[0m [36mdest=[0mhttps://192.168.1.180:8480
-2026/04/20 12:19:55 goose: no migrations to run. current version: 20240517104423
-[90m12:19:55[0m [32mINF[0m creating handler
-[90m12:19:55[0m [32mINF[0m retrieved global snapshot from database
-[90m12:19:55[0m [32mINF[0m listening TLS on 0.0.0.0:8448
-[90m12:19:55[0m [32mINF[0m StartV2Pollers [36mnum_devices=[0m0 [36mnum_fail_decrypt=[0m0
-[90m12:19:55[0m [32mINF[0m StartV2Pollers finished
+[90m22:50:33[0m [31mWRN[0m Could not contact upstream homeserver. Is SYNCV3_SERVER set correctly? [36merror=[0m[31m"Get \"https://192.168.1.180:8480/_matrix/client/versions\": tls: failed to verify certificate: x509: “192.168.1.180” certificate is not trusted"[0m [36mdest=[0mhttps://192.168.1.180:8480
+2026/04/20 22:50:33 goose: no migrations to run. current version: 20240517104423
+[90m22:50:33[0m [32mINF[0m creating handler
+[90m22:50:33[0m [32mINF[0m retrieved global snapshot from database
+[90m22:50:33[0m [32mINF[0m listening TLS on 0.0.0.0:8448
+[90m22:50:33[0m [32mINF[0m StartV2Pollers [36mnum_devices=[0m0 [36mnum_fail_decrypt=[0m0
+[90m22:50:33[0m [32mINF[0m StartV2Pollers finished
+2026/04/20 22:50:49 http: TLS handshake error from 192.168.1.180:49953: remote error: tls: unknown certificate
+2026/04/20 22:50:49 http: TLS handshake error from 192.168.1.180:49954: remote error: tls: unknown certificate
+[90m22:50:49[0m [32mINF[0m [36mc=[0m [36mduration=[0m0.000 [36mpath=[0m/client/ [36msize=[0m19 [36mstatus=[0m404
+[90m23:50:33[0m [32mINF[0m Cleaner running [36mboundaryTime=[0m2026-04-20T22:50:33+05:30
+[90m23:50:33[0m [32mINF[0m RemoveInaccessibleStateSnapshots: deleted rows [36mrows_affected=[0m0
+[90m00:50:33[0m [32mINF[0m Cleaner running [36mboundaryTime=[0m2026-04-20T23:50:33+05:30
+[90m00:50:33[0m [32mINF[0m RemoveInaccessibleStateSnapshots: deleted rows [36mrows_affected=[0m0
