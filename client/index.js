@@ -30,10 +30,10 @@ let syncConnection = new SlidingSyncConnection();
 // You can add/remove these at will to experiment with sliding sync filters.
 let activeLists = [
     // the data model
-    new SlidingList("Direct Messages", {
+    new SlidingList("CHATS", {
         is_dm: true,
     }),
-    new SlidingList("Group Chats", {
+    new SlidingList("GROUPS", {
         is_dm: false,
     }),
 ];
@@ -188,7 +188,8 @@ const renderRoomTimeline = (room, refresh) => {
     // insert timeline messages
     (room.timeline || []).forEach((ev) => {
         const eventIdKey = "msg" + ev.event_id;
-        const msgCell = render.renderEvent(eventIdKey, ev);
+        const selfUserId = window.localStorage.getItem("userId") || "";
+        const msgCell = render.renderEvent(eventIdKey, ev, selfUserId);
         container.appendChild(msgCell);
     });
     if (container.lastChild) {

@@ -1,0 +1,43 @@
+# Gradle
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Android
+local.properties
+*.iml
+.idea/
+.cxx/
+captures/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Secrets / certs
+.secret
+*.pem
+
+# Logs
+*.log
+sliding-sync.log
+
+# Node
+node_modules/

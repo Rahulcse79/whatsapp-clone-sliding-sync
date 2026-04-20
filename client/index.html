@@ -1,63 +1,119 @@
 <html>
     <head>
-        <title>Sync v3 experiments</title>
+        <title>WhatsApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <script src="index.js" type="module"></script>
     </head>
     <body>
+        <!-- Hidden stats/debug -->
         <div class="statsheader">
             <span id="txrx" title="Total sizes of uncompressed HTTP bodies without HTTP headers">0 KB Tx / 0 KB Rx</span>
-            <div id="listgraph" title="Room lists tracked, blue=window yellow=SYNC green=INSERT red=DELETE cyan=UPDATE dark red=INVALIDATE"></div>
+            <div id="listgraph" title="Room lists tracked"></div>
         </div>
-        <div class="page">
-            <div class="leftSide">
-                <div id="roomlistcontainer">
-                
-                </div>
-            </div>
-            <div class="rightSide">
-                <div class="header">
-                    <input id="accessToken" type="password" placeholder="matrix.org access token" />
-                    <input id="syncButton" type="button" value="Start Sync" />
-                    <input id="debugButton" type="button" value="DEBUG" style="display: none;" />
-                    <span id="errorMsg"></span>
-                    <input id="roomfilter" type="text" placeholder="Filter rooms..." />
-                </div>
-                <div class="roomheading">
-                    <img class="roomavatar" decoding="async"  id="selectedroomavatar" src="/client/placeholder.svg"/>
-                    <span id="selectedroomname">Select a room</span>
-                    <div id="selectedroomtopic">
 
+        <div class="wa-app">
+            <!-- LEFT PANEL: Chat List -->
+            <div class="wa-left-panel">
+                <!-- WhatsApp Top Bar -->
+                <div class="wa-topbar">
+                    <span class="wa-topbar-title">WhatsApp</span>
+                    <div class="wa-topbar-icons">
+                        <span class="material-symbols-outlined wa-icon" id="debugButton" style="display:none;">bug_report</span>
+                        <span class="material-symbols-outlined wa-icon wa-icon-camera">photo_camera</span>
+                        <span class="material-symbols-outlined wa-icon">search</span>
+                        <span class="material-symbols-outlined wa-icon">more_vert</span>
                     </div>
                 </div>
-                <div id="messages"></div>
-                <div id="roomfooter">
-                    <input id="sendmessageinput" type="text" placeholder="Enter text or commands /me /invite /join /leave" spellcheck="true" />
+
+                <!-- Login Bar -->
+                <div class="wa-login-bar" id="loginBar">
+                    <input id="accessToken" type="password" placeholder="Enter access token" />
+                    <button id="syncButton">CONNECT</button>
+                    <span id="errorMsg" class="wa-error-msg"></span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="wa-search-bar">
+                    <span class="material-symbols-outlined wa-search-icon">search</span>
+                    <input id="roomfilter" type="text" placeholder="Search or start new chat" />
+                </div>
+
+                <!-- Room List Container -->
+                <div id="roomlistcontainer" class="wa-room-list-container">
+                </div>
+
+                <!-- FAB -->
+                <div class="wa-fab">
+                    <span class="material-symbols-outlined">chat</span>
                 </div>
             </div>
-            <template id="roomCellTemplate">
-                <div class="roomcell">
-                    <img class="roomavatar" decoding="async" src="/client/placeholder.svg"/>
-                    <div class="roominfo">
-                        <span class="unreadcount"></span>
+
+            <!-- RIGHT PANEL: Chat View -->
+            <div class="wa-right-panel">
+                <!-- Chat Header -->
+                <div class="wa-chat-header">
+                    <div class="wa-chat-header-left">
+                        <span class="material-symbols-outlined wa-back-btn">arrow_back</span>
+                        <img class="wa-chat-avatar" decoding="async" id="selectedroomavatar" src="/client/placeholder.svg"/>
+                        <div class="wa-chat-header-info">
+                            <span id="selectedroomname" class="wa-chat-name">Select a chat</span>
+                            <span id="selectedroomtopic" class="wa-chat-status"></span>
+                        </div>
+                    </div>
+                    <div class="wa-chat-header-icons">
+                        <span class="material-symbols-outlined wa-icon">videocam</span>
+                        <span class="material-symbols-outlined wa-icon">call</span>
+                        <span class="material-symbols-outlined wa-icon">more_vert</span>
+                    </div>
+                </div>
+
+                <!-- Messages Area -->
+                <div id="messages" class="wa-messages"></div>
+
+                <!-- Message Input Bar -->
+                <div class="wa-input-bar" id="roomfooter">
+                    <div class="wa-input-container">
+                        <span class="material-symbols-outlined wa-input-icon">sentiment_satisfied</span>
+                        <input id="sendmessageinput" type="text" placeholder="Type a message" spellcheck="true" />
+                        <span class="material-symbols-outlined wa-input-icon">attach_file</span>
+                        <span class="material-symbols-outlined wa-input-icon">photo_camera</span>
+                    </div>
+                    <div class="wa-send-btn">
+                        <span class="material-symbols-outlined">send</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates -->
+        <template id="roomCellTemplate">
+            <div class="roomcell">
+                <img class="roomavatar" decoding="async" src="/client/placeholder.svg"/>
+                <div class="roominfo">
+                    <div class="roominfo-top">
                         <span class="roomname"></span>
                         <span class="roomtimestamp"></span>
-                        <div>
+                    </div>
+                    <div class="roominfo-bottom">
+                        <div class="roominfo-preview">
                             <span class="roomsender"></span>
                             <span class="roomcontent"></span>
                         </div>
+                        <span class="unreadcount"></span>
                     </div>
                 </div>
-            </template>
-            <template id="messagetemplate">
-                <div>
-                    <div class="msgheader">
-                        <div class="msgsender">Alice</div>
-                        <div class="msgtimestamp">11/06/1999 11:22:33</div>
-                    </div>
+            </div>
+        </template>
+        <template id="messagetemplate">
+            <div class="wa-msg-wrapper">
+                <div class="wa-msg-bubble">
+                    <div class="msgsender">Alice</div>
                     <div class="msgcontent">Lorem Ipsum Dolor...</div>
+                    <div class="msgtimestamp">11:22</div>
                 </div>
-            </template>
-        </div>
+            </div>
+        </template>
     </body>
 </html>

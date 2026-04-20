@@ -94,15 +94,23 @@ const zeroPad = (n) => {
 
 const formatTimestamp = (originServerTs) => {
     const d = new Date(originServerTs);
-    return (
-        d.toDateString() +
-        " " +
-        zeroPad(d.getHours()) +
-        ":" +
-        zeroPad(d.getMinutes()) +
-        ":" +
-        zeroPad(d.getSeconds())
-    );
+    return zeroPad(d.getHours()) + ":" + zeroPad(d.getMinutes());
+};
+
+const formatTimestampShort = (originServerTs) => {
+    const d = new Date(originServerTs);
+    const now = new Date();
+    const isToday = d.toDateString() === now.toDateString();
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const isYesterday = d.toDateString() === yesterday.toDateString();
+    if (isToday) {
+        return zeroPad(d.getHours()) + ":" + zeroPad(d.getMinutes());
+    } else if (isYesterday) {
+        return "Yesterday";
+    } else {
+        return zeroPad(d.getDate()) + "/" + zeroPad(d.getMonth() + 1) + "/" + d.getFullYear();
+    }
 };
 
 const mxcToUrl = (syncv2ServerUrl, mxc) => {
@@ -126,15 +134,18 @@ export const renderRoomHeader = (room, syncv2ServerUrl) => {
     if (room.topic) {
         document.getElementById("selectedroomtopic").textContent = room.topic;
     } else {
-        document.getElementById("selectedroomtopic").textContent = "";
+        document.getElementById("selectedroomtopic").textContent = "online";
     }
 };
 
-export const renderEvent = (eventIdKey, ev) => {
+export const renderEvent = (eventIdKey, ev, selfUserId) => {
     const template = document.getElementById("messagetemplate");
-    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#avoiding_documentfragment_pitfall
     const msgCell = template.content.firstElementChild.cloneNode(true);
     msgCell.setAttribute("id", eventIdKey);
+    // Mark sent vs received
+    if (selfUserId && ev.sender === selfUserId) {
+        msgCell.classList.add("wa-msg-sent");
+    }
     msgCell.getElementsByClassName("msgsender")[0].textContent = ev.sender;
     msgCell.getElementsByClassName("msgtimestamp")[0].textContent =
         formatTimestamp(ev.origin_server_ts);
@@ -188,6 +199,8 @@ export const renderRoomCell = (
 
     roomCell.removeAttribute("x-placeholder"); // in case this was previously a placeholder
     roomCell.style = "";
+    roomCell.classList.remove("roomcell-selected");
+    roomCell.classList.remove("roomcell-unread");
     roomNameSpan.textContent = room.name || room.room_id;
     roomNameSpan.style = "";
     roomContentSpan.style = "";
@@ -199,15 +212,17 @@ export const renderRoomCell = (
             "/client/placeholder.svg";
     }
     if (isHighlighted) {
-        roomCell.style = "background: #d7d7f7";
+        roomCell.classList.add("roomcell-selected");
     }
     if (room.highlight_count > 0) {
         // use the notification count instead to avoid counts dropping down. This matches ele-web
         unreadCountSpan.textContent = room.notification_count + "";
         unreadCountSpan.classList.add("unreadcounthighlight");
+        roomCell.classList.add("roomcell-unread");
     } else if (room.notification_count > 0) {
         unreadCountSpan.textContent = room.notification_count + "";
         unreadCountSpan.classList.add("unreadcountnotify");
+        roomCell.classList.add("roomcell-unread");
     } else {
         unreadCountSpan.textContent = "";
     }
@@ -217,9 +232,10 @@ export const renderRoomCell = (
         roomSenderSpan.textContent = room.obsolete;
     } else if (room.timeline && room.timeline.length > 0) {
         const mostRecentEvent = room.timeline[room.timeline.length - 1];
-        roomSenderSpan.textContent = mostRecentEvent.sender;
+        const senderShort = mostRecentEvent.sender.split(":")[0].replace("@","");
+        roomSenderSpan.textContent = senderShort + ": ";
 
-        roomTimestampSpan.textContent = formatTimestamp(
+        roomTimestampSpan.textContent = formatTimestampShort(
             mostRecentEvent.origin_server_ts
         );
 
