@@ -1,0 +1,9 @@
+Sync v3 [0.99.19] (edfdc16)
+Debug=false LogLevel= MaxConns=0
+[90m12:19:55[0m [31mWRN[0m Could not contact upstream homeserver. Is SYNCV3_SERVER set correctly? [36merror=[0m[31m"Get \"https://192.168.1.180:8480/_matrix/client/versions\": tls: failed to verify certificate: x509: “192.168.1.180” certificate is not trusted"[0m [36mdest=[0mhttps://192.168.1.180:8480
+2026/04/20 12:19:55 goose: no migrations to run. current version: 20240517104423
+[90m12:19:55[0m [32mINF[0m creating handler
+[90m12:19:55[0m [32mINF[0m retrieved global snapshot from database
+[90m12:19:55[0m [32mINF[0m listening TLS on 0.0.0.0:8448
+[90m12:19:55[0m [32mINF[0m StartV2Pollers [36mnum_devices=[0m0 [36mnum_fail_decrypt=[0m0
+[90m12:19:55[0m [32mINF[0m StartV2Pollers finished
